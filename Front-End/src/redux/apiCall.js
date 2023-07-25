@@ -199,14 +199,11 @@ console.log(updatedMemberData);
 
 
 //get project plus members assigned
-export const getProjectWithMembers = async (dispatch, user) => {
+export const getProjectWithMembers = async (dispatch) => {
   dispatch(projectWithMembersStart());
 
   try {
-    const {data} = await axios.get(`${apiDomain}/getProjectWithMembers`,{
-      headers: {"authorization" : `${user.token}`}
-    });
-    console.log(`token: ${user.token}`)
+    const {data} = await axios.get(`${apiDomain}/getProjectWithMembers`)
     console.log(data);
     dispatch(projectWithMembersSuccess(data));
   } catch (error) {

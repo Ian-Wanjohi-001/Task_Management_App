@@ -21,7 +21,7 @@ const config = {
         password: SQL_PWD,
         options: {
             encrypt: sqlEncrypt,
-            enableArithAbort: true
+            trustServerCertificate:true
         }
     }
 };

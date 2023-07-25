@@ -10,9 +10,6 @@ function Test() {
   const projectWithMembers = useSelector((state) => state.projectWithMembers.projectWithMembers);
   const isLoading = useSelector((state) => state.projectWithMembers.isLoading);
 
-  useEffect(() => {
-    getProjectWithMembers(dispatch, user);
-  }, [dispatch, user]);
 
   if (isLoading) {
     return <CircularProgress />;

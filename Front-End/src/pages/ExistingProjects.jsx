@@ -1,6 +1,5 @@
-import {  useState } from "react";
-import {  useSelector } from "react-redux";
-
+import {  useState, useEffect } from "react";
+import { getProjectWithMembers } from "../redux/apiCall";
 import { CircularProgress, Card, CardContent, Typography, Grid, Button, Dialog, DialogTitle, DialogContent, DialogContentText, DialogActions, IconButton } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
 import EditIcon from "@mui/icons-material/Edit";
@@ -9,12 +8,19 @@ import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import { Autocomplete, TextField, Chip } from "@mui/material";
+import { useDispatch, useSelector } from "react-redux";
+const ExistingProjects = () => {
+  const dispatch = useDispatch();
+  const user = useSelector((state) => state.user.user);
+  const projectWithMembers = useSelector((state) => state.projectWithMembers.projectWithMembers);
 
-const ExistingProjects = ({projectWithMembers}) => {
+  useEffect(()=>{
+    getProjectWithMembers(dispatch);
+  }, [])
  
 
   const userList = useSelector((state) => state.userList.userList);
- 
+ console.log('sdfsdfsdf')
 
   const [selectedProject, setSelectedProject] = useState(null);
   const [openDialog, setOpenDialog] = useState(false);
@@ -28,7 +34,7 @@ const ExistingProjects = ({projectWithMembers}) => {
     return date.toLocaleDateString("en-US");
   };
 
-  const groupedProjects = projectWithMembers.reduce((result, project) => {
+  const groupedProjects = projectWithMembers?.reduce((result, project) => {
     const existingProject = result.find((p) => p.projectId === project.projectId);
     if (existingProject) {
       existingProject.members.push({
